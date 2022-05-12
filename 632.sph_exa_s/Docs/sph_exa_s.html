@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>632.sph_exa_s SPEChpc 2021 Benchmark Description</title>
+</head>
+<body>
+<div style="text-align: center">
+<h1>632.sph_exa_s<br />
+SPEChpc&trade; 2021 Benchmark Description</h1>
+</div>
+
+<h2>Benchmark Name</h2>
+
+<p>632.sph_exa_s (SPH-EXA mini-app)</p>
+
+<hr />
+
+<h2>Benchmark Author</h2>
+
+<p>Submitted by Florina Ciorba florina.ciorba __at__ unibas.ch</p>
+
+<p>Authors listed in alphabetic order: <br/>
+---------------------------------- <br/>
+<ul>
+<li>Aur&eacute;lien Cavelan (University of Basel)</li> 
+<li>Danilo Guerrera (University of Basel)(*)</li>
+<li>Michal Grabarczyk (University of Basel)</li>
+</ul>
+(*) corresponding author, danilo.guerrera __at__ unibas.ch<br/>
+<br/>
+
+</p>
+
+<hr />
+
+<h2>Benchmark Program General Category</h2>
+
+<p>Astrophysics and Cosmology</p>
+
+<hr />
+
+<h2>Benchmark Description</h2>
+
+<p>The SPH-EXA mini-app implements the smoothed particle hydrodynamics (SPH) technique, a meshless Lagrangian method commonly used for performing hydrodynamical and computational fluid dynamics simulations.
+
+The SPH technique discretizes a fluid in a series of interpolation points (SPH particles) whose distribution follows the mass density of the fluid and their evolution relies on a weighted interpolation over close neighboring particles. SPH simulations with detailed physics calculations represent computationally-demanding applications. The SPH-EXA mini-app is derived from three parent SPH codes used in astrophysics (SPHYNX and ChaNGa) and computational fluid dynamics (SPH-flow).
+
+A number of basic steps of any SPH calculation are included in the mini-app: from the particles&rsquo;  positions and masses a tree is built and walked to identify the neighbors that will be used for the remainder of the global time-step (or iteration). Such steps include the evaluation of the particles&rsquo;  density, acceleration, rate of change of internal energy, and all physical modules relevant to the studied scenario. Next, a new physically relevant and numerically stable time-step is found, and the properties of the particles are updated accordingly.
+
+SPH-EXA mini-app is a modern C++ headers-only code (except for main.cpp) with no external software dependencies. The parallelism is currently expressed via MPI+OpenMP and will be extended to exploit accelerated parallelism (OpenACC, HPX).
+
+This mini-app can simulate a three-dimensional rotating square patch, a demanding scenario for SPH simulations due to the presence of negative pressures, which stimulate the emergence of unphysical tensile instabilities that destroy the particle system, unless corrective repulsive forces are included.
+</p>
+
+<hr />
+
+<h2>Input Description</h2>
+
+<p>
+  -n - number of particles to the cube (-n 100 means that the application will run with 100*100*100 particles)
+  -s - number of time-steps(iterations)
+  -w num - specify how often output file shall be writen (-w 50 means that output file will be dumped every 50 iterations)
+
+  For the testing it has been added to the source code the automatic generation of the input conditions for all given particles.
+
+In the present setup the code performs a simulation of the evolution of a three-dimensional rotating square patch of fluid, modeled using 1000000 (one million) of particles. To do this, additional information are set in the initialization phase:
+<ul>
+<li> The smoothing length H is set to 0.02
+<li> The initial density is 0.0
+<li> The speed of sound is set to 35 m/s
+<li> The mass of the particles is 1 g
+<li> The Courant number used to calculate the next tipe step is K=0.2
+<li> The index of the sinc kernel is set to 6
+<li> 15 stabilization time-steps are used before letting the system fully evolve
+<li> The target number of neighbors (per particle) is set to 650
+<li> The next time-step cannot be bigger than 10% of the previous
+</li>
+</ul>
+
+</p>
+
+</pre>
+
+<hr />
+
+<h2>Output Description</h2>
+
+<p>
+  The code performs the simulation, and at the end it saves the total energy of the system. It is sufficent to check that this value does not change across simulations (for a fixed number of time-steps) to make sure that the code has executed correctly.
+</p>
+<p>
+  Additionally, an output file can be generated which contains positions (x, y, z), velocities (vx, vy, vz), smoothing length (h), density (ro), internal energy (u), pressure (p), speed of sound (c) and gradient of pressure (gradPx, gradPy, gradPz) for all particles at given timestep (iteration). 
+</p>
+
+
+<h2>Programming Language</h2>
+
+<p>C++14</p>
+
+<hr />
+
+<h2>External Dependencies</h2>
+
+<p>None</p>
+
+<h2>Runtime Limitations (such as number of ranks)</h2>
+
+<p>None</p>
+
+<h2>Known portability issues</h2>
+
+<p>None<p>
+
+<hr />
+
+<h2>Version and Licensing</h2>
+
+<p>Application Version: 1.0</p>
+<p>License: MIT</p>
+
+<hr />
+
+<h2>References</h2>
+
+<ul>
+  <li><a href="https://github.com/unibas-dmi-hpc/SPH-EXA_mini-app">https://github.com/unibas-dmi-hpc/SPH-EXA_mini-app</a>
+  <li><a href="https://doi.org/10.1109/CLUSTER.2018.00077">https://doi.org/10.1109/CLUSTER.2018.00077</a>
+</li>
+
+<hr />
+
+<p>Last updated: December 03, 2019</p>
+</body>
+</html>

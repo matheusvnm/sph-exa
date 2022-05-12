@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE flagsdescription SYSTEM
+       "http://www.spec.org/dtd/cpuflags2.dtd">
+
+<!-- This file defines portability flags that may be used when compiling
+     632.sph_exa_s.
+
+  Copyright 2019 Standard Performance Evaluation Corporation
+-->
+<flagsdescription>
+
+<filename>632.sph_exa_s.flags</filename>
+
+<title>632.sph_exa_s Flags</title>
+
+<header>
+<![CDATA[
+<p>Portability flags for 632.sph_exa_s.</p>
+]]>
+</header>
+
+<flag name="DUSE_MPI" class="mandatory">
+Must be defined to enable MPI.
+</flag>
+
+<flag name="DSPEC_USE_LT_IN_KERNELS" class="mandatory">
+Uses lookup tables for critical functions instead of computing them in-place using math functions.
+</flag>
+
+<flag name="DSPEC_USE_STD_MATH" class="forbidden">
+Uses std::math functions instead of optimized version of them.
+</flag>
+
+</flagsdescription>
+
